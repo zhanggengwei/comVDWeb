@@ -32,7 +32,7 @@ public class UserController {
     {
         JSONObject object;
         if(info.getPassWord()==null||info.getPhone()==null||info.getName()==null
-                ||info.getRegion()!=null)
+                ||info.getRegion()==null)
         {
             object = new JSONObject();
             object.put("code", UserInfoCodeConstants.PARAMATER_LACK_CODE);
