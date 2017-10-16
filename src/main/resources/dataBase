@@ -1,0 +1,10 @@
+/*
+*   contactId msg_type content msg_sendTime msg_receiveTime msg_status msg_recalled uid msg_id isTop message_not_distrub
+*   senderId receiveid
+*/
+/*
+ * contactId  group_name group_image uid primary_key(contactId,id) delete  master //群组
+*/
+//friendList
+uid delete f_uid primary_key(uid,f_uid) contactId type  message //type 代表好友的添加类型  手机号码添加，扫描二维码添加
+60000|60001

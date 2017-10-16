@@ -1,0 +1,9 @@
+package com.Sms.service
+
+enum class SmsCodeEnum {
+    REGISTER_SMS_CODE,
+    RESET_PASS_WORD_SMS_CODE,
+    LOGIN_SMS_CODE,
+    CHANGE_PHONE_SMS_CODE,
+    BIND_WECHAT_OPENID_SMS_CODE
+}
