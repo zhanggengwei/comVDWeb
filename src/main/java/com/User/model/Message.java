@@ -1,5 +1,7 @@
 package com.User.model;
 
+import com.User.Constants.MessageType;
+
 public class Message
 {
     private Integer message_ID;
@@ -12,6 +14,9 @@ public class Message
     private Boolean deleteMessage;
     private Boolean messageRecalled;//消息的撤回
     private Integer messageStatus;//消息的状态
+    private MessageType messageType;//消息的类型
+    private String  tipMessage;//提示消息
+    private String  senderIDUserInfo;//发送者的基本消息
 
 
     public Integer getMessage_ID() {

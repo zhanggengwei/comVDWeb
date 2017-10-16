@@ -3,40 +3,22 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.User.Dao.MessageMapper">
-    <insert id="insertMessage" useGeneratedKeys = "true" keyProperty ="userId">
-        insert into Message_Table (name,passWord,phone,region) VALUES (#{name},#{passWord},#{phone},#{region})
+    <insert id="insertMessage" useGeneratedKeys = "true" keyProperty ="message_ID">
+        insert into MESSAGE_TABLE (name,passWord,phone,region) VALUES (#{name},#{passWord},#{phone},#{region})
     </insert>
-
-    <select id = "loginUserInfo" resultType="com.User.model.UserInfo">
-        select * from User_Info where phone = #{phone} and passWord = #{passWord}
+    <select id = "deleteMessage">
+        select * from MESSAGE_TABLE where phone = #{phone} and passWord = #{passWord}
     </select>
 
-    <select id = "searchUserInfoByUid" resultType="com.User.model.UserInfo">
-        SELECT  * from User_Info where userId = #{userId}
+    <select id = "recalledMessage">
+        SELECT  * from MESSAGE_TABLE where userId = #{userId}
     </select>
 
-    <select id = "searchUserInfoByPhone" resultType="com.User.model.UserInfo">
-        SELECT * FROM  User_Info where phone = #{phone}
+    <select id = "updateMessageStatus">
+        SELECT * FROM  MESSAGE_TABLE where phone = #{phone}
     </select>
 
-    <update id="updateUserInfo" parameterType="com.User.model.UserInfo">
-        UPDATE  User_Info
-        <set>
-            <if test = "name != nil">
-                name = #{name,}
-            </if>
-            <if test = "passWord != nil">
-                name = #{passWord,}
-            </if>
-            <if test = "avatarUrl != nil">
-                name = #{avatarUrl,}
-            </if>
-            <if test = "birthday != nil">
-                name = #{birthday,}
-            </if>
-            <if test = "weChatOpenId != nil">
-                name = #{weChatOpenId}
-            </if>
-        </set>
-    </update>
+    <select id="allListMessages" parameterType="java.lang.String">
+
+    </select>
 </mapper>

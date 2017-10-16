@@ -3,11 +3,7 @@ package com.User.model;
 public class MessageConverstaion
 {
     private String  contactID;
-    private String  sendMessagID;
-    private String  receiveMessageId;
-    private Integer timeInterval;
     private String  unReadCount;
-    private Integer conversationType;
     private Message  lastMessage;
     private Boolean isTop;//消息置顶
     private Boolean isDistrub;//开启免打扰片
@@ -21,29 +17,6 @@ public class MessageConverstaion
         this.contactID = contactID;
     }
 
-    public String getSendMessagID() {
-        return sendMessagID;
-    }
-
-    public void setSendMessagID(String sendMessagID) {
-        this.sendMessagID = sendMessagID;
-    }
-
-    public String getReceiveMessageId() {
-        return receiveMessageId;
-    }
-
-    public void setReceiveMessageId(String receiveMessageId) {
-        this.receiveMessageId = receiveMessageId;
-    }
-
-    public Integer getTimeInterval() {
-        return timeInterval;
-    }
-
-    public void setTimeInterval(Integer timeInterval) {
-        this.timeInterval = timeInterval;
-    }
 
     public String getUnReadCount() {
         return unReadCount;
@@ -53,13 +26,6 @@ public class MessageConverstaion
         this.unReadCount = unReadCount;
     }
 
-    public Integer getConversationType() {
-        return conversationType;
-    }
-
-    public void setConversationType(Integer conversationType) {
-        this.conversationType = conversationType;
-    }
 
     public Message getLastMessage() {
         return lastMessage;
