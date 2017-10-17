@@ -57,4 +57,15 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
         writer.close();
     }
 
+    @Override
+    public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        super.afterConcurrentHandlingStarted(request, response, handler);
+        System.out.println("fdf");
+    }
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+       // writeContent("code:dfd",response);
+        return super.preHandle(request, response, handler);
+    }
 }

@@ -17,6 +17,16 @@ public class UserInfo {
     private String email;
     private long birthday;
     private long updateAt;
+    private long registerTime;
+
+    public long getRegisterTime() {
+        return registerTime;
+    }
+
+    public void setRegisterTime(long registerTime) {
+        this.registerTime = registerTime;
+    }
+
 
     public String getName() {
         return name;

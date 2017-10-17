@@ -1,15 +1,12 @@
 package com.User.services;
 
 import com.Sms.service.SmsCodeMessage;
-import com.User.Constants.UserInfoCodeConstants;
-import com.User.Constants.UserInfoMessageConstants;
+import com.User.Constants.HTTPCodeConstants;
+import com.User.Constants.HTTPMessageConstants;
 import com.Utils.SmsCodeUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.Sms.service.SmsCodeEnum;
 import org.springframework.stereotype.Service;
-
-import java.util.Random;
-import java.util.UUID;
 
 //验证码短信发送
 @Service("sendSmsCodeService")
@@ -26,8 +23,8 @@ public class SendSmsCodeService
             e.printStackTrace();
         }
         JSONObject object = new JSONObject();
-        object.put("code", UserInfoCodeConstants.SUCESS_CODE);
-        object.put("msg", UserInfoMessageConstants.SUCESS_MESSAGE);
+        object.put("code", HTTPCodeConstants.SUCESS_CODE);
+        object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
         return object;
     }
 }

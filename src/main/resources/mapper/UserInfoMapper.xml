@@ -4,23 +4,22 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.User.Dao.UserInfoMapper">
     <insert id="registerUserInfo" useGeneratedKeys = "true" keyProperty ="userId">
-        insert into User_Info (name,passWord,phone,region) VALUES (#{name},#{passWord},#{phone},#{region})
+        insert into USER_INFO_TABLE (name,passWord,phone,region,registerTime) VALUES (#{name},#{passWord},#{phone},#{region},#{registerTime})
     </insert>
-
     <select id = "loginUserInfo" resultType="com.User.model.UserInfo">
-        select * from User_Info where phone = #{phone} and passWord = #{passWord}
+        select * from USER_INFO_TABLE where phone = #{phone} and passWord = #{passWord}
     </select>
 
     <select id = "searchUserInfoByUid" resultType="com.User.model.UserInfo">
-        SELECT  * from User_Info where userId = #{userId}
+        SELECT  * from USER_INFO_TABLE where userId = #{userId}
     </select>
 
     <select id = "searchUserInfoByPhone" resultType="com.User.model.UserInfo">
-        SELECT * FROM  User_Info where phone = #{phone}
+        SELECT * FROM  USER_INFO_TABLE where phone = #{phone}
     </select>
 
     <update id="updateUserInfo" parameterType="com.User.model.UserInfo">
-        UPDATE  User_Info
+        UPDATE  USER_INFO_TABLE
         <set>
             <if test = "name != nil">
                 name = #{name,}

@@ -1,6 +1,6 @@
 package com.User.Constants;
 
-public interface UserInfoMessageConstants {
+public interface HTTPMessageConstants {
     String SUCESS_MESSAGE = "SUCESS";
     String PHONE_PASSWORD_ERROR_MESSAGE = "手机号码或者密码不正确";
     String PHONE_NOT_EXISTS_MESSAGE = "手机号码不存在";

@@ -1,10 +1,9 @@
 package com.User.Controller;
 
-import com.User.Constants.UserInfoCodeConstants;
-import com.User.Constants.UserInfoMessageConstants;
+import com.User.Constants.HTTPCodeConstants;
+import com.User.Constants.HTTPMessageConstants;
 import com.User.services.SendSmsCodeService;
 import com.Sms.service.SmsCodeEnum;
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,8 +26,8 @@ public class SendSmsController
         if (phone==null)
         {
             object= new JSONObject();
-            object.put("code", UserInfoCodeConstants.PARAMATER_LACK_CODE);
-            object.put("msg", UserInfoMessageConstants.PARAMATER_LACK_MESSAGE);
+            object.put("code", HTTPCodeConstants.PARAMATER_LACK_CODE);
+            object.put("msg", HTTPMessageConstants.PARAMATER_LACK_MESSAGE);
         }else
         {
             SmsCodeEnum codeEnum = null;

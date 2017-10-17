@@ -50,6 +50,13 @@
           <element id="library" level="project" name="Maven: com.sun.mail:javax.mail:1.5.0" />
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: xyz.downgoon:snowflake:1.0.0" />
+          <element id="library" level="project" name="Maven: com.firebase:firebase-token-generator:1.0.5" />
+          <element id="library" level="project" name="Maven: org.json:json:20090211" />
+          <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.7" />
+          <element id="library" level="project" name="Maven: joda-time:joda-time:2.9.9" />
+          <element id="library" level="project" name="Maven: org.springframework.security:spring-security-jwt:1.0.8.RELEASE" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bcpkix-jdk15on:1.56" />
+          <element id="library" level="project" name="Maven: org.bouncycastle:bcprov-jdk15on:1.56" />
         </element>
       </element>
       <element id="directory" name="META-INF">

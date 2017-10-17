@@ -1,6 +1,6 @@
 package com.User.Constants;
 
-public interface UserInfoCodeConstants
+public interface HTTPCodeConstants
 {
     int SUCESS_CODE = 200;
     int PHONE_NOT_EXITS_CODE = 1000;
