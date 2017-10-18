@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 @RequestMapping("/contact")
 public class ContactController {
-    
+
     @RequestMapping("/addContactByUid")
     @ResponseBody
     public JSONObject addContact(String userId)
