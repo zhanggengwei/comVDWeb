@@ -11,6 +11,4 @@ public interface ContactDao {
     public boolean updateContactNickName();
 
 
-
-
 }

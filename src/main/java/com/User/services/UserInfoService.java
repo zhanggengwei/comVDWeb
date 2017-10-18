@@ -20,11 +20,4 @@ public interface UserInfoService
 
     public JSONObject resetPassWord(UserInfo info,String smsCode);
 
-    public JSONObject searchColleactBeans(String userId);
-
-
-
-
-
-
 }

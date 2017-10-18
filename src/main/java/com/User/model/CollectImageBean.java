@@ -5,7 +5,10 @@ public class CollectImageBean {
     private String userId;
     private String sourceUrl;
     private Integer imageId;
-    private boolean idDelete;
+
+
+
+    private boolean isDelete;
 
     public String getUserId() {
         return userId;
@@ -31,12 +34,13 @@ public class CollectImageBean {
         this.imageId = imageId;
     }
 
-    public boolean isIdDelete() {
-        return idDelete;
+    public boolean isDelete() {
+        return isDelete;
     }
 
-    public void setIdDelete(boolean idDelete) {
-        this.idDelete = idDelete;
+    public void setDelete(boolean delete) {
+        isDelete = delete;
     }
+
 
 }

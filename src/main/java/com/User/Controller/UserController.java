@@ -175,7 +175,8 @@ public class UserController {
     {
        HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
        String userId = req.getParameter("userId");
-       JSONObject object = userInfoService.searchColleactBeans(userId);
+       userId = "6001";
+       JSONObject object = photoManagerService.getAllImagesBeans(userId);
        return object;
     }
 
@@ -185,7 +186,7 @@ public class UserController {
     {
         String userId = request.getHeader("userId");
         userId = "6001";
-        JSONObject object = new JSONObject();
+        JSONObject object = null;
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         if(commonsMultipartResolver.isMultipart(request))
         {
@@ -194,9 +195,7 @@ public class UserController {
             Iterator<String> ite = multipartHttpServletRequest.getFileNames();
             List<String> paths =
                             uploadFileService.saveFilePath(multipartHttpServletRequest.getFiles("image"),"56556");
-            photoManagerService.saveImageBeans(paths,userId);
-            object.put("code",200);
-            object.put("msg","");
+            object = photoManagerService.saveImageBeans(paths,userId);
         }else {
             MultipartHttpServletRequest multipartHttpServletRequest =
                     commonsMultipartResolver.resolveMultipart(request);

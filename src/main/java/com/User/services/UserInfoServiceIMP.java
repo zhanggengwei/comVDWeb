@@ -28,9 +28,6 @@ public class UserInfoServiceIMP implements UserInfoService {
     UserAuthMapper authMapper;
     @Autowired
     SMSCodeMapper smsCodeMapper;
-    @Autowired
-    UserImageMapper userImageDao;
-
 
     @Transactional
     public JSONObject loginUserInfo(String phone, String passWord) {
@@ -192,23 +189,5 @@ public class UserInfoServiceIMP implements UserInfoService {
         }
         return object;
     }
-
-    public JSONObject searchColleactBeans(String userId)
-    {
-        JSONObject jsonObject = new JSONObject();
-        try
-        {
-            List<CollectImageBean> lists = userImageDao.getAllCollectBeans(userId);
-            jsonObject.put("code",HTTPCodeConstants.SUCESS_CODE);
-            jsonObject.put("msg",HTTPMessageConstants.SUCESS_MESSAGE);
-            jsonObject.put("result",lists);
-        }
-        catch (Exception e)
-        {
-            throw  new RuntimeException(e);
-        }
-        return  jsonObject;
-    }
-
 
 }

@@ -9,7 +9,6 @@ public class SMSCodeBean
     private Integer smsCodeType;
     private String region;
 
-
     public String getPhone() {
         return phone;
     }
