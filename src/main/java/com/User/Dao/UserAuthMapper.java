@@ -1,6 +1,7 @@
 package com.User.Dao;
 
 import com.User.model.UserAuth;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository

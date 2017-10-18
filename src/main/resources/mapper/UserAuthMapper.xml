@@ -6,15 +6,12 @@
     <insert id="insert_Auth" useGeneratedKeys = "true">
         insert into USER_INFO_Auth (token,userId,expire_Time,weChatOpenId) VALUES (#{token},#{userId},#{expire_Time},#{weChatOpenId})
     </insert>
-
-    <select id = "searchByToken">
-        select * from USER_INFO_Auth where token = #{token}
+    <select id="searchByToken" resultType="com.User.model.UserAuth">
+       select * from USER_INFO_Auth where token = #{token}
     </select>
-
-    <select id="searchByWeChatOpenId">
-        select * from USER_INFO_Auth where weChatOpenId = #{weChatOpenId}
+    <select id="searchByWeChatOpenId" resultType="com.User.model.UserAuth">
+       select * from USER_INFO_Auth where weChatOpenId = #{weChatOpenId}
     </select>
-
     <update id = "update_AuthToken">
         update USER_INFO_Auth
         <set>

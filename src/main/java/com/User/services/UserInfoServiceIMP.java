@@ -4,17 +4,20 @@ import com.User.Constants.HTTPCodeConstants;
 import com.User.Constants.HTTPMessageConstants;
 import com.User.Dao.SMSCodeMapper;
 import com.User.Dao.UserAuthMapper;
+import com.User.Dao.UserImageMapper;
 import com.User.Dao.UserInfoMapper;
 import com.User.Utils.MD5Utils;
+import com.User.model.CollectImageBean;
 import com.User.model.SMSCodeBean;
 import com.User.model.UserAuth;
 import com.User.model.UserInfo;
 import com.Utils.TokenUtils;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.taglibs.standard.util.EscapeXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service("userInfoService")
 @Transactional
@@ -23,9 +26,10 @@ public class UserInfoServiceIMP implements UserInfoService {
     UserInfoMapper userMapper;
     @Autowired
     UserAuthMapper authMapper;
-
     @Autowired
     SMSCodeMapper smsCodeMapper;
+    @Autowired
+    UserImageMapper userImageDao;
 
 
     @Transactional
@@ -187,6 +191,23 @@ public class UserInfoServiceIMP implements UserInfoService {
             throw  new RuntimeException(e);
         }
         return object;
+    }
+
+    public JSONObject searchColleactBeans(String userId)
+    {
+        JSONObject jsonObject = new JSONObject();
+        try
+        {
+            List<CollectImageBean> lists = userImageDao.getAllCollectBeans(userId);
+            jsonObject.put("code",HTTPCodeConstants.SUCESS_CODE);
+            jsonObject.put("msg",HTTPMessageConstants.SUCESS_MESSAGE);
+            jsonObject.put("result",lists);
+        }
+        catch (Exception e)
+        {
+            throw  new RuntimeException(e);
+        }
+        return  jsonObject;
     }
 
 

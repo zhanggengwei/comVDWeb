@@ -22,6 +22,10 @@ public class HandshakeInterceptor extends HttpSessionHandshakeInterceptor{
                                ServerHttpResponse response, WebSocketHandler wsHandler,
                                Exception ex) {
         System.out.println("After Handshake");
+
+
+
+
         super.afterHandshake(request, response, wsHandler, ex);
     }
 

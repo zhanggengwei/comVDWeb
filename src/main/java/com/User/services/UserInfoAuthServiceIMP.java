@@ -38,6 +38,7 @@ public class UserInfoAuthServiceIMP implements UserInfoAuthService{
     public UserAuth searchAuthByToken(String token) {
         try {
             return authMapper.searchByToken(token);
+
         }catch (Exception e)
         {
             throw new RuntimeException(e) ;

@@ -4,8 +4,11 @@ package com.interceptor;
  *
  */
 
+import com.User.model.UserAuth;
+import com.User.services.UserInfoAuthService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -30,6 +33,12 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  */
 public class CommonInterceptor extends HandlerInterceptorAdapter {
     private final Logger log = LoggerFactory.getLogger(CommonInterceptor.class);
+
+    @Autowired
+
+    private UserInfoAuthService authService;
+
+
     /**
      * 在DispatcherServlet完全处理完请求后被调用,可用于清理资源等
      *
@@ -66,6 +75,27 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
        // writeContent("code:dfd",response);
-        return super.preHandle(request, response, handler);
+//        String token = request.getHeader("token");
+//        if(token==null)
+//        {
+//             throw  new RuntimeException("token is nil ");
+//        }else
+//        {
+//            UserAuth auth = authService.searchAuthByToken(token);
+//            if(auth==null)
+//            {
+//                throw  new RuntimeException("token is error");
+//            }
+//            if(auth.tokenIsValid())
+//            {
+//                return super.preHandle(request, response, handler);
+//            }else
+//            {
+//                throw  new RuntimeException();
+//            }
+//            request.setAttribute("userId","2");
+            return super.preHandle(request,response,handler);
+//        }
+
     }
 }

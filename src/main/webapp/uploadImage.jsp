@@ -11,8 +11,8 @@
     <title>Title</title>
 </head>
 <body>
-<form action="/webApp/upload/file" method="post" enctype="multipart/form-data">
-    <input type="file" name="headImage"></input>
+<form action="/webApp/user/uploadImages" method="post" enctype="multipart/form-data">
+    <input type="file" name="image"></input>
     <input type="submit" name="" id="">submit</input>
 </form>
 </body>

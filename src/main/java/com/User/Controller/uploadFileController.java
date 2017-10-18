@@ -37,7 +37,7 @@ public class uploadFileController
                  MultipartFile file = multipartHttpServletRequest.getFile(ite.next());
                  if(file!=null){
                      //MultipartFile multipartFile = multipartHttpServletRequest.getFile("headImage");
-                     String path = uploadFileService.saveFilePath(file);
+                    // String path = uploadFileService.saveFilePath(file);
                  }
              }
              object.put("code",200);

@@ -4,27 +4,30 @@ import com.User.Constants.HTTPCodeConstants;
 import com.User.Constants.HTTPMessageConstants;
 import com.User.model.SMSCodeBean;
 import com.User.model.UserAuth;
-import com.User.services.SMSCodeService;
-import com.User.services.UserInfoAuthService;
-import com.User.services.UserInfoService;
+import com.User.services.*;
 import com.Utils.SmsCodeUtils;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.User.Dao.*;
 import com.User.model.UserInfo;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import org.springframework.web.context.request.ServletWebRequest;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.awt.*;
+import java.util.*;
 import java.lang.reflect.Array;
 import java.util.Date;
+import java.util.Iterator;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -40,6 +43,12 @@ public class UserController {
 
     @Autowired
     private SmsCodeUtils codeUtils;
+
+
+    @Autowired
+    private PhotoManagerService photoManagerService;
+
+
 
     @RequestMapping("/register")
     @ResponseBody
@@ -127,6 +136,73 @@ public class UserController {
             return object;
         }
         return  codeUtils.sendCode(phone,1);
+    }
+
+    @Autowired
+    UploadFileService uploadFileService;
+    @RequestMapping(value = "/uploadAvatarImage",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject uploadFile(HttpServletRequest request, HttpServletResponse response)
+    {
+        String token = request.getHeader("token");
+        JSONObject object = new JSONObject();
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        if(commonsMultipartResolver.isMultipart(request))
+        {
+            MultipartHttpServletRequest multipartHttpServletRequest =
+                    (MultipartHttpServletRequest)request;
+
+                    //MultipartFile multipartFile = multipartHttpServletRequest.getFile("headImage");
+//                    String path = uploadFileService.saveFilePath(file);
+                    //UserInfo
+                    //userInfoService.updateUserInfo()
+
+
+            object.put("code",200);
+            object.put("msg","");
+        }else {
+            MultipartHttpServletRequest multipartHttpServletRequest =
+                    commonsMultipartResolver.resolveMultipart(request);
+
+        }
+        return object;
+    }
+
+    @RequestMapping("/user_images")
+    @ResponseBody
+    //获得个人的上传头像的数组
+    public JSONObject getAllImages()
+    {
+       HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
+       String userId = req.getParameter("userId");
+       JSONObject object = userInfoService.searchColleactBeans(userId);
+       return object;
+    }
+
+    @RequestMapping(value = "/uploadImages",method = RequestMethod.POST)
+    @ResponseBody
+    public JSONObject uploadImages(HttpServletRequest request, HttpServletResponse response)
+    {
+        String userId = request.getHeader("userId");
+        userId = "6001";
+        JSONObject object = new JSONObject();
+        CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
+        if(commonsMultipartResolver.isMultipart(request))
+        {
+            MultipartHttpServletRequest multipartHttpServletRequest =
+                    (MultipartHttpServletRequest)request;
+            Iterator<String> ite = multipartHttpServletRequest.getFileNames();
+            List<String> paths =
+                            uploadFileService.saveFilePath(multipartHttpServletRequest.getFiles("image"),"56556");
+            photoManagerService.saveImageBeans(paths,userId);
+            object.put("code",200);
+            object.put("msg","");
+        }else {
+            MultipartHttpServletRequest multipartHttpServletRequest =
+                    commonsMultipartResolver.resolveMultipart(request);
+
+        }
+        return object;
     }
 
 

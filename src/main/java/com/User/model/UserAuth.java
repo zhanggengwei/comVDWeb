@@ -9,6 +9,7 @@ public class UserAuth {
     private Integer updateTime;
 
 
+
     public String getToken() {
         return token;
     }
@@ -47,6 +48,11 @@ public class UserAuth {
 
     public void setUpdateTime(Integer updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public boolean tokenIsValid()
+    {
+        return true;
     }
 
 

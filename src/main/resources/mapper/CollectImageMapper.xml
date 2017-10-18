@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.User.Dao.UserImageMapper">
+    <insert id="banchCollectImageBean" useGeneratedKeys = "true" keyProperty ="imageId" parameterType="java.util.List">
+        insert into USER_INFO_FAVIOUTE_IMAGE_TABLE (userId,sourceUrl) VALUES
+         <foreach collection = "list" item = "item" index = "index" separator = ",">
+             (#{item.userId},#{item.sourceUrl})
+         </foreach>
+    </insert>
+    <select id = "getAllCollectBeans" resultType="com.User.model.CollectImageBean">
+        select * from USER_INFO_FAVIOUTE_IMAGE_TABLE where userId = #{userId} AND isDelete = FALSE
+    </select>
+    <update id = "deleteImageBeanByImageId">
+        UPDATE  USER_INFO_FAVIOUTE_IMAGE_TABLE set  isDelete = TRUE
+    </update>
+</mapper>
