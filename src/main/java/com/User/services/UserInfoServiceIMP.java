@@ -2,10 +2,16 @@ package com.User.services;
 
 import com.User.Constants.HTTPCodeConstants;
 import com.User.Constants.HTTPMessageConstants;
+import com.User.Dao.SMSCodeMapper;
+import com.User.Dao.UserAuthMapper;
 import com.User.Dao.UserInfoMapper;
 import com.User.Utils.MD5Utils;
+import com.User.model.SMSCodeBean;
+import com.User.model.UserAuth;
 import com.User.model.UserInfo;
+import com.Utils.TokenUtils;
 import com.alibaba.fastjson.JSONObject;
+import org.apache.taglibs.standard.util.EscapeXML;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +21,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserInfoServiceIMP implements UserInfoService {
     @Autowired
     UserInfoMapper userMapper;
+    @Autowired
+    UserAuthMapper authMapper;
+
+    @Autowired
+    SMSCodeMapper smsCodeMapper;
+
+
+    @Transactional
     public JSONObject loginUserInfo(String phone, String passWord) {
         JSONObject object = new JSONObject();
         //加密密码
@@ -50,6 +64,10 @@ public class UserInfoServiceIMP implements UserInfoService {
             }
             else {
                 userMapper.registerUserInfo(info);
+                UserAuth auth = new UserAuth();
+                auth.setUid(Integer.parseInt(info.getUserId()));
+                //auth.setExpire_Time(2000000);
+                authMapper.insert_Auth(auth);
                 object.put("code", HTTPCodeConstants.SUCESS_CODE);
                 object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
                 object.put("result", info);
@@ -114,7 +132,62 @@ public class UserInfoServiceIMP implements UserInfoService {
     @Override
     public JSONObject updateUserInfo(UserInfo inf) {
         JSONObject object = new JSONObject();
-
         return null;
     }
+
+    @Transactional
+    @Override
+    public JSONObject resetPassWord(UserInfo info,String smsCode) {
+
+        JSONObject object = new JSONObject();
+        if(info.getPassWord()==null||info.getPhone()==null)
+        {
+            object.put("code",HTTPCodeConstants.PARAMATER_LACK_CODE);
+            object.put("msg",HTTPMessageConstants.PARAMATER_LACK_MESSAGE);
+        }
+        try {
+            UserInfo currentInfo = userMapper.searchUserInfoByPhone(info.getPhone());
+            if(currentInfo==null)
+            {
+                object.put("code",HTTPCodeConstants.PHONE_NOT_EXITS_CODE);
+                object.put("msg",HTTPMessageConstants.PHONE_NOT_EXISTS_MESSAGE);
+            }else {
+
+                SMSCodeBean bean = smsCodeMapper.searchSmsCodeBeanByPhone(info.getPhone());
+                if(bean==null)
+                {
+                    object.put("code",HTTPCodeConstants.SMS_CODE_LACK);
+                    object.put("msg",HTTPMessageConstants.SMS_CODE_LACK_MESSAGE);
+
+                }else
+                {
+                    if(!bean.getSmsCode().equals(smsCode))
+                    {
+                        object.put("code",HTTPCodeConstants.SMS_CODE_ERROR);
+                        object.put("msg",HTTPMessageConstants.SMS_CODE_ERROR_MESSAGE);
+
+                    }else {
+                        UserAuth auth = new UserAuth();
+                        auth.setUid(Integer.parseInt(currentInfo.getUserId()));
+                        String token = TokenUtils.createToken(info);
+                        auth.setToken("-------");
+                        auth.setExpire_Time(50);
+                        info.setUserId(currentInfo.getUserId());
+                        userMapper.updateUserInfo(info);
+                        authMapper.update_AuthToken(auth);
+
+                        object.put("code", HTTPCodeConstants.SUCESS_CODE);
+                        object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
+                        object.put("result", currentInfo);
+                    }
+                }
+            }
+        }catch (Exception e)
+        {
+            throw  new RuntimeException(e);
+        }
+        return object;
+    }
+
+
 }

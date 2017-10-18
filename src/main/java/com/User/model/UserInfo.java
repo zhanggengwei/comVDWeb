@@ -1,10 +1,9 @@
 package com.User.model;
 
-import org.springframework.stereotype.Component;
 /**
  * Created by vd on 2017/9/4.
  */
-@Component
+
 public class UserInfo {
     private String name;
     private String passWord;
@@ -18,6 +17,7 @@ public class UserInfo {
     private long birthday;
     private long updateAt;
     private long registerTime;
+
 
     public long getRegisterTime() {
         return registerTime;

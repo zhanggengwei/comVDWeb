@@ -3,7 +3,7 @@ package com.User.model;
 public class UserAuth {
 
     private String token;
-    private Integer uid;
+    private Integer userId;
     private Integer expire_Time;
     private String weChatOpenId;
     private Integer updateTime;
@@ -17,12 +17,12 @@ public class UserAuth {
         this.token = token;
     }
 
-    public Integer getUid() {
-        return uid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUid(Integer uid) {
-        this.uid = uid;
+    public void setUid(Integer userId) {
+        this.userId = userId;
     }
 
     public Integer getExpire_Time() {

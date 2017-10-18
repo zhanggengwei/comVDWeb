@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.User.Dao.SMSCodeMapper">
+    <select id="searchSmsCodeBeanByPhone" resultType="com.User.model.SMSCodeBean">
+        SELECT * FROM SMS_CODE_TABLE  WHERE phone = #{phone}
+    </select>
+
+    <insert id = "insertSmsCodeBean" parameterType="com.User.model.SMSCodeBean">
+        INSERT INTO SMS_CODE_TABLE (phone,smsCode,expire_time,smsCodeType) VALUES (#{phone},#{smsCode},#{expire_time},#{smsCodeType})
+    </insert>
+
+   <update id="updateSmsCodeBean" parameterType="com.User.model.SMSCodeBean">
+       update  SMS_CODE_TABLE
+       <set>
+           <if test="smsCode!=null">
+               smsCode = #{smsCode}
+           </if>
+           <if test="expire_time !=null">
+               expire_time = #{expire_time}
+           </if>
+           <if test= "smsCodeType !=null">
+               smsCodeType = #{smsCodeType}
+           </if>
+       </set>
+   </update>
+</mapper>

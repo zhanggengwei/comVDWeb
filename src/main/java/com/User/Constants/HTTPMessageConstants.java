@@ -7,4 +7,6 @@ public interface HTTPMessageConstants {
     String PHONE_EXISTS_MESSAGE = "手机号码已经存在";
     String PARAMATER_LACK_MESSAGE = "参数缺少";
     String UID_ERROR_MESSAGE = "id不存在";
+    String SMS_CODE_ERROR_MESSAGE = "验证码错误";
+    String SMS_CODE_LACK_MESSAGE = "验证码不存在";
 }

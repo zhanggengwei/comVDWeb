@@ -2,6 +2,7 @@ package com.User.Controller;
 
 import com.User.Constants.HTTPCodeConstants;
 import com.User.Constants.HTTPMessageConstants;
+import com.User.Constants.SMSMessageType;
 import com.User.services.SendSmsCodeService;
 import com.Sms.service.SmsCodeEnum;
 import com.alibaba.fastjson.JSONObject;
@@ -20,8 +21,26 @@ public class SendSmsController
 
     @RequestMapping("/SmsCode")
     @ResponseBody
-    public JSONObject sendSmsCode(String phone)
+    public JSONObject sendSmsCode(String phone,Integer smsType)
     {
+        Integer type = SMSMessageType.login_sms;
+        switch (type)
+        {
+            case 1:
+                break;
+            case 2:
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            default:
+                break;
+        }
+
+
         JSONObject object = null;
         if (phone==null)
         {

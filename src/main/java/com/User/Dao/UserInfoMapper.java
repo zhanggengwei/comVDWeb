@@ -13,5 +13,5 @@ public interface UserInfoMapper {
 
     public UserInfo searchUserInfoByPhone(@Param("phone") String phone);
 
-    public int updateUserInfo(@Param("userInfo") UserInfo userInfo);
+    public int updateUserInfo(UserInfo userInfo);
 }

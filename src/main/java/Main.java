@@ -1,3 +1,4 @@
+import com.Utils.SmsCodeUtils;
 import org.apache.log4j.*;
 
 public class Main {
@@ -10,5 +11,8 @@ public class Main {
         logger.info("This is info message.");
         // 记录error级别的信息  
         logger.error("This is error message.");
+
+        new SmsCodeUtils().sendCode("18863014571",1);
+
     }
 }

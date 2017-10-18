@@ -18,5 +18,10 @@ public interface UserInfoService
 
     public JSONObject updateUserInfo(UserInfo inf);
 
+    public JSONObject resetPassWord(UserInfo info,String smsCode);
+
+
+
+
 
 }

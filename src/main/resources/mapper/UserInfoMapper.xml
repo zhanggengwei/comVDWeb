@@ -18,24 +18,28 @@
         SELECT * FROM  USER_INFO_TABLE where phone = #{phone}
     </select>
 
-    <update id="updateUserInfo" parameterType="com.User.model.UserInfo">
+    <update id="updateUserInfo">
         UPDATE  USER_INFO_TABLE
         <set>
-            <if test = "name != nil">
-                name = #{name,}
+            <if test = "name != null">
+                name = #{name}
             </if>
-            <if test = "passWord != nil">
-                name = #{passWord,}
+            <if test = "passWord != null">
+                passWord = #{passWord}
             </if>
-            <if test = "avatarUrl != nil">
-                name = #{avatarUrl,}
+            <if test = "avatarUrl != null">
+                avatarUrl = #{avatarUrl}
             </if>
-            <if test = "birthday != nil">
-                name = #{birthday,}
+            <if test = "birthday != 0">
+                birthday = #{birthday}
             </if>
-            <if test = "weChatOpenId != nil">
-                name = #{weChatOpenId}
+            <if test = "phone != null">
+                phone = #{phone}
+            </if>
+            <if test = "email != null">
+                email = #{email}
             </if>
         </set>
+        WHERE userId = #{userId}
     </update>
 </mapper>

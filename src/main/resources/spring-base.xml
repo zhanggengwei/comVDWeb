@@ -28,7 +28,7 @@
 	</bean>
 
 	<!-- 自动扫描dao和service包(自动注入) -->	
-	<context:component-scan base-package="com.User.Dao,com.User.services" />
+	<context:component-scan base-package="com.User.Dao,com.User.services,com.Utils" />
 
 
 </beans>
