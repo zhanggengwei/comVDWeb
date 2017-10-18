@@ -144,22 +144,21 @@ public class UserController {
     @ResponseBody
     public JSONObject uploadFile(HttpServletRequest request, HttpServletResponse response)
     {
-        String token = request.getHeader("token");
+//        String token = request.getHeader("token");
+        String userId = request.getParameter("userId");
+        userId = "60001";
         JSONObject object = new JSONObject();
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         if(commonsMultipartResolver.isMultipart(request))
         {
             MultipartHttpServletRequest multipartHttpServletRequest =
                     (MultipartHttpServletRequest)request;
-
-                    //MultipartFile multipartFile = multipartHttpServletRequest.getFile("headImage");
-//                    String path = uploadFileService.saveFilePath(file);
-                    //UserInfo
-                    //userInfoService.updateUserInfo()
-
-
-            object.put("code",200);
-            object.put("msg","");
+            List<String> paths =
+                    uploadFileService.saveFilePath(multipartHttpServletRequest.getFiles("headImage"),"56556333");
+            UserInfo updateInfo =  new UserInfo();
+            updateInfo.setUserId(userId);
+            updateInfo.setAvatarUrl(paths.get(0));
+            object = userInfoService.updateUserInfo(updateInfo);
         }else {
             MultipartHttpServletRequest multipartHttpServletRequest =
                     commonsMultipartResolver.resolveMultipart(request);
@@ -192,9 +191,8 @@ public class UserController {
         {
             MultipartHttpServletRequest multipartHttpServletRequest =
                     (MultipartHttpServletRequest)request;
-            Iterator<String> ite = multipartHttpServletRequest.getFileNames();
             List<String> paths =
-                            uploadFileService.saveFilePath(multipartHttpServletRequest.getFiles("image"),"56556");
+                            uploadFileService.saveFilePath(multipartHttpServletRequest.getFiles("image"),"56556333");
             object = photoManagerService.saveImageBeans(paths,userId);
         }else {
             MultipartHttpServletRequest multipartHttpServletRequest =

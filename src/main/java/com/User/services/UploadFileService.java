@@ -33,21 +33,27 @@ public class UploadFileService
     {
         List<String> fileList = new ArrayList<String>();
         String dirPath = Photo_LocalPath+secret;
-        if(!new File(dirPath).exists())
+        File dirFile = new File(dirPath);
+        if(!dirFile.exists())
         {
-            new File(dirPath).mkdir();
+            dirFile.mkdir();
+            dirFile.setReadable(true);
+            dirFile.setWritable(true);
+            dirFile.setExecutable(true);
+            FileUtils.setFilePermission(dirPath);
         }
         for (MultipartFile multifile:multipartFiles)
         {
-            String filePath = dirPath + "/" + FileUtils.createUIDString(multifile.getOriginalFilename());
-            File file = new File(filePath);
+            String fileName = FileUtils.createUIDString(multifile.getOriginalFilename());
+            String path = dirPath+"/"+fileName;
+            File file = new File(path);
             try {
+                multifile.transferTo(file);
+                FileUtils.setFilePermission(path);
                 file.setReadable(true);
                 file.setWritable(true);
                 file.setExecutable(true);
-                multifile.transferTo(file);
-                FileUtils.setFilePermission(filePath);
-                fileList.add(Photo_Server_path+"/"+secret+"/"+);
+                fileList.add(Photo_Server_path+"/"+"avatarImage"+"/"+secret+"/"+fileName);
             } catch (IOException e) {
                 e.printStackTrace();
             }

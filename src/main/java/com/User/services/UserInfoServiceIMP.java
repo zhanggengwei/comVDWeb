@@ -131,9 +131,18 @@ public class UserInfoServiceIMP implements UserInfoService {
     }
 
     @Override
-    public JSONObject updateUserInfo(UserInfo inf) {
+    public JSONObject updateUserInfo(UserInfo info) {
         JSONObject object = new JSONObject();
-        return null;
+        try {
+            userMapper.updateUserInfo(info);
+            object.put("code",HTTPCodeConstants.SUCESS_CODE);
+            object.put("msg",HTTPMessageConstants.SUCESS_MESSAGE);
+            object.put("result",info.getAvatarUrl());
+        }catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
+        return object;
     }
 
     @Transactional
