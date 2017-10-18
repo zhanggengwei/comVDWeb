@@ -33,9 +33,6 @@
             <if test = "birthday != 0">
                 birthday = #{birthday}
             </if>
-            <if test = "phone != null">
-                phone = #{phone}
-            </if>
             <if test = "email != null">
                 email = #{email}
             </if>
