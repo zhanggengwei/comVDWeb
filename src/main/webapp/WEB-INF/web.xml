@@ -74,7 +74,7 @@
     <servlet-name>SpringMVC</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-<!--log4j-->
+  <!--log4j-->
 
   <!-- 设定刷新日志配置文件的时间间隔，这里设置为10s -->
   <context-param>
@@ -152,6 +152,23 @@
     <servlet-name>default</servlet-name>
     <url-pattern>*.swf</url-pattern>
   </servlet-mapping>
+
+  <filter>
+    <!-- 注意下面这个过滤器名称要跟下面的spring-context.xml的相同 -->
+    <filter-name>myRequestLogFilter</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <param-name>targetFilterLifecycle</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+  <filter-mapping>
+    <filter-name>myRequestLogFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+
+
   <session-config>
     <session-timeout>15</session-timeout>
   </session-config>
@@ -160,12 +177,12 @@
     <welcome-file>index.jsp</welcome-file>
   </welcome-file-list>
   <!-- error-page -->
-  <error-page>
-    <error-code>404</error-code>
-    <location>/error/404.jsp</location>
-  </error-page>
-  <error-page>
-    <error-code>500</error-code>
-    <location>/error/500.jsp</location>
-  </error-page>
+  <!--<error-page>-->
+  <!--<error-code>404</error-code>-->
+  <!--<location>/error/404.jsp</location>-->
+  <!--</error-page>-->
+  <!--<error-page>-->
+  <!--<error-code>500</error-code>-->
+  <!--<location>/error/500.jsp</location>-->
+  <!--</error-page>-->
 </web-app>

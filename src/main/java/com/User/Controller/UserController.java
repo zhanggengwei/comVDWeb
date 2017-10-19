@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
@@ -31,7 +32,7 @@ import java.util.Iterator;
 
 @Controller
 @RequestMapping(value = "/user")
-public class UserController {
+public class UserController{
 
     private static org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(UserController.class);
 
@@ -89,8 +90,6 @@ public class UserController {
     @ResponseBody
     public JSONObject searchUserByPhone(String phone)
     {
-        //HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
-       // HttpServletResponse resp = ((ServletWebRequest)RequestContextHolder.getRequestAttributes()).getResponse();
         JSONObject object;
         if(phone==null)
         {
@@ -108,7 +107,11 @@ public class UserController {
     @ResponseBody
     public JSONObject updatePassWord(String smsCode,String oldPassWord,String newPassWord)
     {
-        String userId = "60002";
+        HttpServletRequest req =
+                ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).
+                        getRequest();
+        Map map = req.getParameterMap();
+        String userId = (String)req.getAttribute("userId");
         JSONObject object;
         if(smsCode==null||oldPassWord==null||newPassWord==null)
         {
@@ -119,7 +122,6 @@ public class UserController {
         }
         return object;
     }
-
 
     @RequestMapping("/resetPassWord")
     @ResponseBody
@@ -161,9 +163,7 @@ public class UserController {
     @ResponseBody
     public JSONObject uploadFile(HttpServletRequest request, HttpServletResponse response)
     {
-//        String token = request.getHeader("token");
         String userId = request.getParameter("userId");
-        userId = "60001";
         JSONObject object = new JSONObject();
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         if(commonsMultipartResolver.isMultipart(request))
@@ -175,7 +175,8 @@ public class UserController {
             UserInfo updateInfo =  new UserInfo();
             updateInfo.setUserId(userId);
             updateInfo.setAvatarUrl(paths.get(0));
-            object = userInfoService.updateUserInfo(updateInfo);
+            object = userInfoService.updateUserAvatarUrl(paths.get(0),userId);
+
         }else {
             MultipartHttpServletRequest multipartHttpServletRequest =
                     commonsMultipartResolver.resolveMultipart(request);
@@ -191,7 +192,6 @@ public class UserController {
     {
        HttpServletRequest req = ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).getRequest();
        String userId = req.getParameter("userId");
-       userId = "6001";
        JSONObject object = photoManagerService.getAllImagesBeans(userId);
        return object;
     }
@@ -200,8 +200,7 @@ public class UserController {
     @ResponseBody
     public JSONObject uploadImages(HttpServletRequest request, HttpServletResponse response)
     {
-        String userId = request.getHeader("userId");
-        userId = "6001";
+        String userId = (String) request.getAttribute("userId");
         JSONObject object = null;
         CommonsMultipartResolver commonsMultipartResolver = new CommonsMultipartResolver(request.getSession().getServletContext());
         if(commonsMultipartResolver.isMultipart(request))
@@ -218,6 +217,5 @@ public class UserController {
         }
         return object;
     }
-
 
 }

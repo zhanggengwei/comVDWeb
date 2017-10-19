@@ -7,10 +7,7 @@ import com.User.Dao.UserAuthMapper;
 import com.User.Dao.UserImageMapper;
 import com.User.Dao.UserInfoMapper;
 import com.User.Utils.MD5Utils;
-import com.User.model.CollectImageBean;
-import com.User.model.SMSCodeBean;
-import com.User.model.UserAuth;
-import com.User.model.UserInfo;
+import com.User.model.*;
 import com.Utils.TokenUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.util.concurrent.ExecutionError;
@@ -53,6 +50,7 @@ public class UserInfoServiceIMP implements UserInfoService {
         object.put("result",info);
         return object;
     }
+    @Transactional
     public JSONObject registerUserInfo(UserInfo info) {
         JSONObject object = new JSONObject();
         UserInfo searchUserInfo = null;
@@ -66,9 +64,7 @@ public class UserInfoServiceIMP implements UserInfoService {
             }
             else {
                 userMapper.registerUserInfo(info);
-                UserAuth auth = new UserAuth();
-                auth.setUid(Integer.parseInt(info.getUserId()));
-                //auth.setExpire_Time(2000000);
+                UserAuth auth = UserAuth.createAuthByUserId(info.getUserId(),null);
                 authMapper.insert_Auth(auth);
                 object.put("code", HTTPCodeConstants.SUCESS_CODE);
                 object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
@@ -178,11 +174,7 @@ public class UserInfoServiceIMP implements UserInfoService {
                         object.put("msg",HTTPMessageConstants.SMS_CODE_ERROR_MESSAGE);
 
                     }else {
-                        UserAuth auth = new UserAuth();
-                        auth.setUid(Integer.parseInt(currentInfo.getUserId()));
-                        String token = TokenUtils.createToken(info);
-                        auth.setToken("-------");
-                        auth.setExpire_Time(50);
+                        UserAuth auth = UserAuth.createAuthByUserId(currentInfo.getUserId(),null);
                         info.setUserId(currentInfo.getUserId());
                         userMapper.updateUserInfo(info);
                         authMapper.update_AuthToken(auth);
@@ -201,6 +193,7 @@ public class UserInfoServiceIMP implements UserInfoService {
     }
 
     @Override
+    @Transactional
     public JSONObject updatePassWord(String userId,String oldPassWord,String passWord, String smsCode) {
         //修改密码 userId smsCode oldPassWord newPassWord
 

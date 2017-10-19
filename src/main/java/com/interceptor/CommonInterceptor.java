@@ -75,27 +75,21 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
        // writeContent("code:dfd",response);
-//        String token = request.getHeader("token");
-//        if(token==null)
-//        {
-//             throw  new RuntimeException("token is nil ");
-//        }else
-//        {
-//            UserAuth auth = authService.searchAuthByToken(token);
-//            if(auth==null)
-//            {
-//                throw  new RuntimeException("token is error");
-//            }
-//            if(auth.tokenIsValid())
-//            {
-//                return super.preHandle(request, response, handler);
-//            }else
-//            {
-//                throw  new RuntimeException();
-//            }
-//            request.setAttribute("userId","2");
-            return super.preHandle(request,response,handler);
-//        }
-
+        UserAuth auth = (UserAuth) request.getAttribute("auth");
+        String token = request.getHeader("token");
+        if(token==null)
+        {
+            throw new RuntimeException(new Exception("token is nil ")) ;
+        }else if(auth==null)
+        {
+            throw new RuntimeException(new Exception("token is error"));
+        }
+        else if (auth.tokenIsValid())
+        {
+            return super.preHandle(request, response, handler);
+        }else
+        {
+            throw  new RuntimeException(new Exception("token time out"));
+        }
     }
 }

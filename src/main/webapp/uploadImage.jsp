@@ -1,19 +1,38 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: vd
-  Date: 2017/10/14
-  Time: 下午2:42
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
     <title>Title</title>
+    <script src="http://www.jq22.com/jquery/jquery-2.1.1.js"></script>
 </head>
 <body>
-<form action="/webApp/user/uploadAvatarImage" method="post" enctype="multipart/form-data">
-    <input type="file" name="headImage"></input>
-    <input type="submit" name="" id="">submit</input>
-</form>
+<input type="file" name="headImage" id="uploadForm"></input>
+<input type="submit" name="" id="submit">submit</input>
+<script type="text/javascript">
+    var btn = document.getElementById("submit");
+    btn.addEventListener("click", function(event){
+        uploadImage()
+        event.preventDefault()
+
+    }, false);
+    function uploadImage() {
+        var formData = new FormData($( "#uploadForm" )[0]);
+        $.ajax({
+            url: '/webApp/user/uploadAvatarImage' ,  /*这是处理文件上传的servlet*/
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+            header:{"token":"861670386"},
+            success: function (returndata) {
+                alert(returndata);
+            },
+            error: function (returndata) {
+                alert(returndata);
+            }
+        });
+
+    }
+</script>
 </body>
 </html>

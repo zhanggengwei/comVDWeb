@@ -48,8 +48,6 @@
 	</bean>
 
 
-
-
 	<!--<bean id="exceptionHandler" class="com.exception.MySimpleMappingExceptionResolver"/>-->
 	<!--配置拦截器, 多个拦截器,顺序执行 -->
 	<mvc:interceptors>
@@ -63,6 +61,10 @@
 			<mvc:mapping path="/" />
 			<mvc:mapping path="/**" />
 			<mvc:exclude-mapping path="/user/login"/>
+			<mvc:exclude-mapping path="/user/sendSms"/>
+			<mvc:exclude-mapping path="/user/register"/>
+			<mvc:exclude-mapping path="/user/resetPassWord"/>
+
 
 			<bean class="com.interceptor.CommonInterceptor"></bean>
 		</mvc:interceptor>
