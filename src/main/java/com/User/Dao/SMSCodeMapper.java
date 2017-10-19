@@ -9,11 +9,9 @@ public interface SMSCodeMapper {
 
     public SMSCodeBean searchSmsCodeBeanByPhone(String phone);
 
-    public int  insertSmsCodeBean(SMSCodeBean bean);
-
-    public int  updateSmsCodeBean(SMSCodeBean bean);
-
-
+    public int  saveOrUpdate(SMSCodeBean bean);
+    //判断验证码是否正确
+    public SMSCodeBean judgeSmsCodeIsValid(String useId);
 
 
 

@@ -47,10 +47,14 @@ public class SmsCodeUtils
         SMSCodeBean bean = new SMSCodeBean();
         bean.setSmsCode(code);
         bean.setPhone(phone);
-        bean.setExpire_time(System.currentTimeMillis());
+        bean.setExpire_time(Integer.valueOf((int)System.currentTimeMillis()));
         bean.setSmsCodeType(smsType);
-        smsCodeService.addOrUpdate(bean);
-
+        try {
+            smsCodeService.addOrUpdate(bean);
+        }catch (Exception e)
+        {
+            throw new RuntimeException(e);
+        }
         JSONObject object = new JSONObject();
         object.put("code", HTTPCodeConstants.SUCESS_CODE);
         object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);

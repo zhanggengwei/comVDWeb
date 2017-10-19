@@ -104,6 +104,23 @@ public class UserController {
         return object;
     }
 
+    @RequestMapping("updatePassWord")
+    @ResponseBody
+    public JSONObject updatePassWord(String smsCode,String oldPassWord,String newPassWord)
+    {
+        String userId = "60002";
+        JSONObject object;
+        if(smsCode==null||oldPassWord==null||newPassWord==null)
+        {
+          throw new RuntimeException(new Exception("参数缺少"));
+        }else
+        {
+            object = this.userInfoService.updatePassWord(userId,oldPassWord,newPassWord,smsCode);
+        }
+        return object;
+    }
+
+
     @RequestMapping("/resetPassWord")
     @ResponseBody
     public JSONObject resetPassWord(String phone,String passWord,String region,String smsCode)

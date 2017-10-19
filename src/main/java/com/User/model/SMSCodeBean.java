@@ -6,8 +6,19 @@ public class SMSCodeBean
     private String smsCode;
     private long  expire_time;
     private long  updateAt;
-    private Integer smsCodeType;
+    private int smsCodeType;
     private String region;
+    private String sms_messageId;
+
+
+    public String getSms_messageId() {
+        return sms_messageId;
+    }
+
+    public void setSms_messageId(String sms_messageId) {
+        this.sms_messageId = sms_messageId;
+    }
+
 
     public String getPhone() {
         return phone;
@@ -45,7 +56,7 @@ public class SMSCodeBean
         return smsCodeType;
     }
 
-    public void setSmsCodeType(Integer smsCodeType) {
+    public void setSmsCodeType(int smsCodeType) {
         this.smsCodeType = smsCodeType;
     }
 

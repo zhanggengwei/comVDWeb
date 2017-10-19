@@ -24,12 +24,6 @@
             <if test = "name != null">
                 name = #{name}
             </if>
-            <if test = "passWord != null">
-                passWord = #{passWord}
-            </if>
-            <if test = "avatarUrl != null">
-                avatarUrl = #{avatarUrl}
-            </if>
             <if test = "birthday != 0">
                 birthday = #{birthday}
             </if>
@@ -39,4 +33,13 @@
         </set>
         WHERE userId = #{userId}
     </update>
+
+    <update id = "updatePassWord">
+        UPDATE USER_INFO_TABLE set passWord = #{newPassWord} WHERE userId = #{userId} and passWord = #{oldPassWord}
+    </update>
+
+    <update id = "updateAvatarUrl">
+        update  USER_INFO_TABLE set avatarUrl = #{avatarUrl}  WHERE userId = #{userId}
+    </update>
+
 </mapper>

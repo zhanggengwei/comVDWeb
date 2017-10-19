@@ -55,5 +55,18 @@ public class UserAuth {
         return true;
     }
 
+    public static UserAuth createAuthByUserId(String userId,String wechatOpenId)
+    {
+        UserAuth auth = new UserAuth();
+        auth.setUid(Integer.parseInt(userId));
+        auth.setExpire_Time(2000);
+        auth.setToken("20000");
+        if(wechatOpenId!=null)
+        {
+            auth.setWeChatOpenId(wechatOpenId);
+        }
+        return auth;
+    }
+
 
 }

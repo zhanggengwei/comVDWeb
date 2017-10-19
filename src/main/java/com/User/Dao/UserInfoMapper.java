@@ -14,4 +14,10 @@ public interface UserInfoMapper {
     public UserInfo searchUserInfoByPhone(@Param("phone") String phone);
 
     public int updateUserInfo(UserInfo userInfo);
+
+    public int updatePassWord(@Param("oldPassWord") String oldPassWord,@Param("userId") String userId,@Param("newPassWord")String  newPassWord);
+
+    public int updateAvatarUrl(@Param("avatarUrl") String avatarUrl,@Param("userId") String userId);
+
+
 }

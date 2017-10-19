@@ -13,6 +13,7 @@ import com.User.model.UserAuth;
 import com.User.model.UserInfo;
 import com.Utils.TokenUtils;
 import com.alibaba.fastjson.JSONObject;
+import com.google.common.util.concurrent.ExecutionError;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -192,6 +193,53 @@ public class UserInfoServiceIMP implements UserInfoService {
                     }
                 }
             }
+        }catch (Exception e)
+        {
+            throw  new RuntimeException(e);
+        }
+        return object;
+    }
+
+    @Override
+    public JSONObject updatePassWord(String userId,String oldPassWord,String passWord, String smsCode) {
+        //修改密码 userId smsCode oldPassWord newPassWord
+
+        JSONObject object = new JSONObject();
+        try {
+            SMSCodeBean smsCodeBean = smsCodeMapper.judgeSmsCodeIsValid(userId);
+            if(smsCodeBean==null)
+            {
+               throw new RuntimeException(new Exception("请发送手机验证码"));
+            }
+//            if(smsCodeBean.getExpire_time()==0)
+//            {
+//                throw new RuntimeException(new Exception("验证码过期"));
+//            }
+            if(userMapper.updatePassWord(oldPassWord,userId,passWord)>0)
+            {
+                UserAuth auth = UserAuth.createAuthByUserId(userId,null);
+                authMapper.update_AuthToken(auth);
+                object.put("code",HTTPCodeConstants.SUCESS_CODE);
+                object.put("msg",HTTPMessageConstants.SUCESS_MESSAGE);
+            }else
+            {
+                throw  new RuntimeException(new Exception("密码错误"));
+            }
+        }catch (Exception e)
+        {
+            throw  new RuntimeException(e);
+        }
+        return object;
+    }
+
+    @Override
+    public JSONObject updateUserAvatarUrl(String avatarUrl, String userId) {
+        JSONObject object = new JSONObject();
+        try {
+            userMapper.updateAvatarUrl(avatarUrl, userId);
+            object.put("code",HTTPCodeConstants.SUCESS_CODE);
+            object.put("msg",HTTPMessageConstants.SUCESS_MESSAGE);
+            object.put("result",avatarUrl);
         }catch (Exception e)
         {
             throw  new RuntimeException(e);

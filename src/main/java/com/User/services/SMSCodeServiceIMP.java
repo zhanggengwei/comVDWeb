@@ -37,7 +37,7 @@ public class SMSCodeServiceIMP implements SMSCodeService{
         Boolean flag = false;
         try
         {
-            flag = codeMapper.insertSmsCodeBean(bean) > 0;
+            flag = codeMapper.saveOrUpdate(bean) > 0;
         }catch (Exception  e)
         {
             throw new RuntimeException(e);

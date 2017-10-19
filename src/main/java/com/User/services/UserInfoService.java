@@ -20,4 +20,11 @@ public interface UserInfoService
 
     public JSONObject resetPassWord(UserInfo info,String smsCode);
 
+    //更改手机密码
+    public JSONObject updatePassWord(String userId,String oldPassWord,String passWord, String smsCode);
+
+    //修改头像的地址
+
+    public JSONObject updateUserAvatarUrl(String avatarUrl,String userId);
+
 }
