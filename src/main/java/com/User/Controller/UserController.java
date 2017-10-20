@@ -49,8 +49,6 @@ public class UserController{
     @Autowired
     private PhotoManagerService photoManagerService;
 
-
-
     @RequestMapping("/register")
     @ResponseBody
     public JSONObject registerUserInfo(UserInfo info)

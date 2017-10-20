@@ -1,4 +1,5 @@
 package com.User.model;
+import java.util.*;
 
 /**
  * Created by vd on 2017/9/4.
@@ -17,6 +18,33 @@ public class UserInfo {
     private long birthday;
     private long updateAt;
     private long registerTime;
+    private List<CollectImageBean> list;
+    private UserAuth auth;
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public UserAuth getAuth() {
+        return auth;
+    }
+
+    public void setAuth(UserAuth auth) {
+        this.auth = auth;
+    }
+
+    public List<CollectImageBean> getList() {
+        return list;
+    }
+
+    public void setList(List<CollectImageBean> list) {
+        this.list = list;
+    }
 
 
     public long getRegisterTime() {

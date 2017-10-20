@@ -2,10 +2,7 @@ package com.User.services;
 
 import com.User.Constants.HTTPCodeConstants;
 import com.User.Constants.HTTPMessageConstants;
-import com.User.Dao.SMSCodeMapper;
-import com.User.Dao.UserAuthMapper;
-import com.User.Dao.UserImageMapper;
-import com.User.Dao.UserInfoMapper;
+import com.User.Dao.*;
 import com.User.Utils.MD5Utils;
 import com.User.model.*;
 import com.Utils.TokenUtils;
@@ -27,6 +24,10 @@ public class UserInfoServiceIMP implements UserInfoService {
     @Autowired
     SMSCodeMapper smsCodeMapper;
 
+    @Autowired
+    classMapper mapper;
+
+
     @Transactional
     public JSONObject loginUserInfo(String phone, String passWord) {
         JSONObject object = new JSONObject();
@@ -34,8 +35,11 @@ public class UserInfoServiceIMP implements UserInfoService {
         passWord = MD5Utils.md5String(passWord);
         UserInfo info = null;
         try {
-            info = this.userMapper.searchUserInfoByPhone(phone);
-            if(info==null||(!info.getPassWord().equals(passWord)))
+//            List<OrderUserCustom> list = orderMapper.findOrderUserList();
+             Classes list = mapper.getClass(1);
+
+            info = this.userMapper.loginUserInfo(phone,passWord);
+            if(info==null)
             {
                  object.put("code", HTTPCodeConstants.PHONE_PASSWORD_ERROR_CODE);
                  object.put("msg", HTTPMessageConstants.PHONE_PASSWORD_ERROR_MESSAGE);

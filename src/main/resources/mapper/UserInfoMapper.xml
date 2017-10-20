@@ -3,12 +3,49 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.User.Dao.UserInfoMapper">
+
+    <resultMap type="com.User.model.UserInfo"  id="userInfoReusltMap">
+        <id property="userId" column="userId"/>
+        <result property="name" column="name"/>
+        <!--<result property="phone" column="phone"/>-->
+        <!--<result property="region" column="region"/>-->
+        <!--<result property="avatarUrl" column="avatarUrl"/>-->
+        <!--<result property="email" column="email"/>-->
+        <!--<result property="birthday" column="birthday"/>-->
+        <!--<result property="updateAt" column="updateAt"></result>-->
+        <!--<result property="registerTime" column="registerTime"></result>-->
+        <!--<collection property="list" ofType="com.User.model.CollectImageBean">-->
+        <!--<id column="imageId" property="imageId"/>-->
+        <!--<result property="userId" column="userId"></result>-->
+        <!--<result property="sourceUrl" column="sourceUrl"></result>-->
+        <!--<result property="isDelete" column="isDelete"></result>-->
+        <!--</collection>-->
+    </resultMap>
+
     <insert id="registerUserInfo" useGeneratedKeys = "true" keyProperty ="userId">
         insert into USER_INFO_TABLE (name,passWord,phone,region,registerTime) VALUES (#{name},#{passWord},#{phone},#{region},#{registerTime})
     </insert>
-    <select id = "loginUserInfo" resultType="com.User.model.UserInfo">
-        select * from USER_INFO_TABLE where phone = #{phone} and passWord = #{passWord}
-    </select>
+    <!--<select id = "loginUserInfo" resultType="userInfoReusltMap">-->
+        <!--select * from USER_INFO_TABLE t-->
+        <!--,USER_INFO_FAVIOUTE_IMAGE_TABLE c-->
+        <!--where t.userId='60006'-->
+<!-- -        and c.userId = t.userId-->
+
+
+
+<!--&#45;&#45;         select  * from USER_INFO_TABLE-->
+<!--&#45;&#45;         join USER_INFO_Auth-->
+<!--&#45;&#45;         join USER_INFO_FAVIOUTE_IMAGE_TABLE-->
+<!--&#45;&#45;         where-->
+<!--&#45;&#45;         (USER_INFO_TABLE.phone = #{phone} and-->
+<!--&#45;&#45;         USER_INFO_TABLE.passWord = #{passWord})-->
+<!--&#45;&#45;         and-->
+<!--&#45;&#45;         USER_INFO_Auth.userId = USER_INFO_TABLE.userId and-->
+<!--&#45;&#45;         USER_INFO_FAVIOUTE_IMAGE_TABLE.userId = USER_INFO_TABLE.userId)-->
+
+    <!--</select>-->
+
+
 
     <select id = "searchUserInfoByUid" resultType="com.User.model.UserInfo">
         SELECT  * from USER_INFO_TABLE where userId = #{userId}
@@ -41,5 +78,34 @@
     <update id = "updateAvatarUrl">
         update  USER_INFO_TABLE set avatarUrl = #{avatarUrl}  WHERE userId = #{userId}
     </update>
+
+
+    <select id="loginUserInfo" resultMap="ClassResultMap">
+        select * from USER_INFO_TABLE c,USER_INFO_FAVIOUTE_IMAGE_TABLE t,USER_INFO_Auth a
+        where c.phone=#{phone}
+        and c.passWord=#{passWord} and t.userId = c.userId and a.userId = c.userId
+    </select>
+    <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
+    <resultMap type="com.User.model.UserInfo" id="ClassResultMap">
+        <id property="userId" column="userId"/>
+        <result property="name" column="name"/>
+        <result property="phone" column="phone"/>
+        <result property="region" column="region"/>
+        <result property="avatarUrl" column="avatarUrl"/>
+        <result property="email" column="email"/>
+        <result property="birthday" column="birthday"/>
+        <result property="updateAt" column="updateAt"></result>
+        <result property="registerTime" column="registerTime"></result>
+        <association property="token" javaType="java.lang.String">
+            <!--<id property="userId" column="userId"/>-->
+            <result property="token" column="token"/>
+        </association>
+        <collection property="list" ofType="com.User.model.CollectImageBean">
+            <result property="userId" column="userId"/>
+            <result property="sourceUrl" column="sourceUrl"></result>
+            <result property="imageId" column="imageId"></result>
+            <result property="isDelete" column="isDelete"></result>
+        </collection>
+    </resultMap>
 
 </mapper>

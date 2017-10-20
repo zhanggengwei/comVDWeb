@@ -1,4 +1,5 @@
 import com.Utils.SmsCodeUtils;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.*;
 
 public class Main {
@@ -13,6 +14,7 @@ public class Main {
         logger.error("This is error message.");
 
         new SmsCodeUtils().sendCode("18863014571",1);
+
 
     }
 }

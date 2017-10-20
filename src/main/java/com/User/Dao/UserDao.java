@@ -6,5 +6,5 @@ import javax.annotation.Resource;
 
 @Repository
 public interface UserDao {
-    public User getUserNameByMsisdn(String userMsisdn);
+
 }
