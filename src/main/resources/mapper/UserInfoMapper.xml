@@ -85,6 +85,16 @@
         where c.phone=#{phone}
         and c.passWord=#{passWord} and t.userId = c.userId and a.userId = c.userId
     </select>
+
+
+    <select id="customUserInfo" resultMap="ClassResultMap">
+        select * from USER_INFO_TABLE c,USER_INFO_FAVIOUTE_IMAGE_TABLE t,USER_INFO_Auth a
+        where c.phone=#{phone} and t.userId = c.userId AND a.userId = c.userId
+    </select>
+
+
+
+
     <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
     <resultMap type="com.User.model.UserInfo" id="ClassResultMap">
         <id property="userId" column="userId"/>
@@ -101,11 +111,17 @@
             <result property="token" column="token"/>
         </association>
         <collection property="list" ofType="com.User.model.CollectImageBean">
-            <result property="userId" column="userId"/>
+            <!--<result property="userId" column="userId"/>-->
             <result property="sourceUrl" column="sourceUrl"></result>
             <result property="imageId" column="imageId"></result>
-            <result property="isDelete" column="isDelete"></result>
+            <!--<result property="isDelete" column="isDelete"></result>-->
         </collection>
     </resultMap>
+    <update id= "resetPassWord">
+       update USER_INFO_TABLE set passWord = #{userInfo.passWord}
+       where phone = #{userInfo.phone} and
+       (SELECT phone FROM SMS_CODE_TABLE
+       WHERE phone = #{userInfo.phone} and smsCode = #{smsCode})
+    </update>
 
 </mapper>

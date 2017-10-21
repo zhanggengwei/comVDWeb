@@ -6,9 +6,7 @@ public class CollectImageBean {
     private String sourceUrl;
     private Integer imageId;
 
-
-
-    private boolean isDelete;
+    private Boolean isDelete;
 
     public String getUserId() {
         return userId;
@@ -34,11 +32,11 @@ public class CollectImageBean {
         this.imageId = imageId;
     }
 
-    public boolean isDelete() {
-        return isDelete;
-    }
+//    public boolean isDelete() {
+//        return isDelete;
+//    }
 
-    public void setDelete(boolean delete) {
+    public void setDelete(Boolean delete) {
         isDelete = delete;
     }
 

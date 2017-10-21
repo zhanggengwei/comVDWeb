@@ -10,7 +10,8 @@
          </foreach>
     </insert>
     <select id = "getAllCollectBeans" resultType="com.User.model.CollectImageBean">
-        select * from USER_INFO_FAVIOUTE_IMAGE_TABLE where userId = #{userId} AND isDelete = FALSE
+        select * from USER_INFO_FAVIOUTE_IMAGE_TABLE
+        where userId = #{userId} AND isDelete = FALSE
     </select>
     <update id = "deleteImageBeanByImageId">
         UPDATE  USER_INFO_FAVIOUTE_IMAGE_TABLE set  isDelete = TRUE

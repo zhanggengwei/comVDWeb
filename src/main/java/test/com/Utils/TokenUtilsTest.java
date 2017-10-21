@@ -15,12 +15,11 @@ import junit.framework.TestCase;
  */
 public class TokenUtilsTest {
 
-
     @org.junit.Test
     public void createToken()
     {
         UserInfo info = new UserInfo() ;
-        String token = TokenUtils.createToken(info);
+        String token = TokenUtils.createToken("");
 
         System.out.println("token--"+token);
     }

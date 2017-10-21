@@ -1,5 +1,8 @@
 package com.User.model;
 
+import com.Utils.TokenUtils;
+import sun.tools.jstat.Token;
+
 import java.util.Date;
 
 public class UserAuth {
@@ -9,8 +12,14 @@ public class UserAuth {
     private Integer expire_Time;
     private String weChatOpenId;
     private Integer updateTime;
+    private String phone;
 
-
+    public String getPhone() {
+        return phone;
+    }
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getToken() {
         return token;
@@ -57,19 +66,15 @@ public class UserAuth {
         return true;
     }
 
-    public static UserAuth createAuthByUserId(String userId,String wechatOpenId)
+    public static UserAuth createAuthByUserId(String userId,String wechatOpenId,String phone)
     {
         UserAuth auth = new UserAuth();
         auth.setUid(userId);
+        auth.setPhone(phone);
+        auth.setWeChatOpenId(wechatOpenId);
         auth.setExpire_Time((int)(new Date().getTime()));
-        String token = Integer.toString((int) System.currentTimeMillis());
+        String token = TokenUtils.createToken(phone);
         auth.setToken(token);
-        if(wechatOpenId!=null)
-        {
-            auth.setWeChatOpenId(wechatOpenId);
-        }
         return auth;
     }
-
-
 }

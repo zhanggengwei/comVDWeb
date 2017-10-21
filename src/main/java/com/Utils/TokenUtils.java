@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class TokenUtils
 {
-    public static String  createToken(UserInfo info)
+    public static String  createToken(String phone)
     {
         TokenGenerator generator = new TokenGenerator(""+"vd");
         TokenOptions options = new TokenOptions();

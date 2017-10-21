@@ -68,7 +68,7 @@ public class UserInfoServiceIMP implements UserInfoService {
             }
             else {
                 userMapper.registerUserInfo(info);
-                UserAuth auth = UserAuth.createAuthByUserId(info.getUserId(),null);
+                UserAuth auth = UserAuth.createAuthByUserId(info.getUserId(),null,info.getPhone());
                 authMapper.insert_Auth(auth);
                 object.put("code", HTTPCodeConstants.SUCESS_CODE);
                 object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
@@ -157,7 +157,10 @@ public class UserInfoServiceIMP implements UserInfoService {
             object.put("msg",HTTPMessageConstants.PARAMATER_LACK_MESSAGE);
         }
         try {
-            UserInfo currentInfo = userMapper.searchUserInfoByPhone(info.getPhone());
+            UserAuth auth = UserAuth.createAuthByUserId(info.getUserId(),null,info.getPhone());
+            userMapper.resetPassWord(info,smsCode);
+            authMapper.update_AuthToken(auth);
+            UserInfo currentInfo = userMapper.customUserInfo(info.getPhone());
             if(currentInfo==null)
             {
                 object.put("code",HTTPCodeConstants.PHONE_NOT_EXITS_CODE);
@@ -178,10 +181,7 @@ public class UserInfoServiceIMP implements UserInfoService {
                         object.put("msg",HTTPMessageConstants.SMS_CODE_ERROR_MESSAGE);
 
                     }else {
-                        UserAuth auth = UserAuth.createAuthByUserId(currentInfo.getUserId(),null);
-                        info.setUserId(currentInfo.getUserId());
-                        userMapper.updateUserInfo(info);
-                        authMapper.update_AuthToken(auth);
+
 
                         object.put("code", HTTPCodeConstants.SUCESS_CODE);
                         object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
@@ -214,7 +214,7 @@ public class UserInfoServiceIMP implements UserInfoService {
 //            }
             if(userMapper.updatePassWord(oldPassWord,userId,passWord)>0)
             {
-                UserAuth auth = UserAuth.createAuthByUserId(userId,null);
+                UserAuth auth = UserAuth.createAuthByUserId(userId,null,null);
                 authMapper.update_AuthToken(auth);
                 object.put("code",HTTPCodeConstants.SUCESS_CODE);
                 object.put("msg",HTTPMessageConstants.SUCESS_MESSAGE);
