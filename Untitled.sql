@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS USER_INFO_TABLE
  (
      userId int not null,
      imageId int auto_increment primary key,
-     idDelete BOOL,
+     isDelete BOOL,
      sourceUrl text not null
  );
 --  
@@ -104,8 +104,10 @@ CREATE TABLE IF NOT EXISTS USER_INFO_TABLE
      token varchar(30),
      weChatOpenId varchar(30),
      userId  INT primary key,
-     expire_time TIMESTAMP,
-     create_time TIMESTAMP default CURRENT_TIMESTAMP
+     phone varchar(30) not null,
+     expire_time long,
+     create_time long,
+     updateAt TIMESTAMP default CURRENT_TIMESTAMP
  );
 --  drop table FRIENDLIST_TABLE;
  create table if not EXISTS FRIENDLIST_TABLE
@@ -120,11 +122,13 @@ CREATE TABLE IF NOT EXISTS USER_INFO_TABLE
 --  drop table SMS_CODE_TABLE;
  create table if not EXISTS  SMS_CODE_TABLE
  (
-     phone INT primary key,
+     phone INT  not null,
      smsCode VARCHAR(6) NOT NULL ,
      expire_time long,
      updateAt TIMESTAMP default current_timestamp,
-     smsCodeType INT
+     smsCodeType INT,
+     sms_messageId INT auto_increment,
+     primary key(phone,smsCodeType)
  );
  
  create table if not exists SMS_TEMPLATE_TABLE

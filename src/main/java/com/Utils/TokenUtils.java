@@ -30,9 +30,6 @@ public class TokenUtils
         {
             e.printStackTrace();
         }
-        //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.
-        // eyJuYmYiOjE1MDgyMDU0ODUsImRlYnVnIjp0cnVlLCJkIjp7Im1zZyI6Mn0sInYiOjAsImFkbWluIjp0cnVlLCJleHAiOjYxNDY2NDAwMDAwLCJpYXQiOjE1MDgyMDU0ODV9.
-        // pGIG8Q22C11FifKc6S3eiODuXyM8kNZb8DdnAIZplhw
-        return token;
+        return "" + System.currentTimeMillis();
     }
 }

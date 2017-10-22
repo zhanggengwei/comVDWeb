@@ -74,7 +74,7 @@ public class UserAuth {
         auth.setWeChatOpenId(wechatOpenId);
         auth.setExpire_Time((int)(new Date().getTime()));
         String token = TokenUtils.createToken(phone);
-        auth.setToken(token);
+        auth.setToken(token.substring(0,28));
         return auth;
     }
 }

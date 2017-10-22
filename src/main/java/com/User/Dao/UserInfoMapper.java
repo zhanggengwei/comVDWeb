@@ -17,11 +17,12 @@ public interface UserInfoMapper {
 
     public int updateUserInfo(UserInfo userInfo);
 
-    public int updatePassWord(@Param("oldPassWord") String oldPassWord,@Param("userId") String userId,@Param("newPassWord")String  newPassWord);
+    public int updatePassWord(@Param("oldPassWord") String oldPassWord,@Param("phone") String phone,@Param("newPassWord")String  newPassWord);
 
     public int updateAvatarUrl(@Param("avatarUrl") String avatarUrl,@Param("userId") String userId);
 
-    public int resetPassWord(@Param("userInfo") UserInfo userInfo,@Param("smsCode") String smsCode);
+    public int resetPassWord(@Param("userInfo") UserInfo userInfo,
+                             @Param("smsCode") String smsCode);
 
 
 

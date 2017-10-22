@@ -21,6 +21,15 @@ public class UserInfo {
     private List<CollectImageBean> list;
     private UserAuth auth;
     private String token;
+    private Integer sex;
+
+    public Integer getSex() {
+        return sex;
+    }
+    public void setSex(Integer sex) {
+        this.sex = sex;
+    }
+
 
     public String getToken() {
         return token;

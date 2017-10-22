@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.User.Dao.FriendRequestMapper">
+
+    <insert id="addOrUpdate" useGeneratedKeys = "true" keyProperty ="requestId"
+            parameterType="com.User.model.FriendRequestModel">
+        <selectKey keyProperty="status" resultType="int" order="BEFORE">
+            select count(*) from FRIEND_REQUEST_TABLE where
+            userId = #{userId} and q_userId = #{q_userId}
+        </selectKey>
+        <if test="status > 0">
+            update FRIEND_REQUEST_TABLE
+
+              SET  q_message = #{q_message}
+
+            where userId = #{userId} and q_userId = #{q_userId}
+        </if>
+        <if test="status==0">
+            insert into FRIEND_REQUEST_TABLE (userId,q_userId,q_message)
+            values(#{userId},#{q_userId},#{q_message})
+        </if>
+
+    </insert>
+    <select id = "allRquestModels" resultType="com.User.model.FriendRequestModel">
+        select * from FRIEND_REQUEST_TABLE
+        where (userId = #{userId} OR q_userId = #{q_userId}) AND isDelete = FALSE
+    </select>
+    <update id = "deleteFriendRquest">
+        UPDATE  FRIEND_REQUEST_TABLE set isDelete = FALSE
+        WHERE userId = #{userId} and requestId = #{requestId}
+    </update>
+</mapper>

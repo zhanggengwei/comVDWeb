@@ -101,6 +101,24 @@ public class UserController{
         return object;
     }
 
+    @RequestMapping("/searchUserByUserId")
+    @ResponseBody
+    public JSONObject searchUserByUserId(String userId)
+    {
+        JSONObject object;
+        if(userId==null)
+        {
+            object = new JSONObject();
+            object.put("code", HTTPCodeConstants.PARAMATER_LACK_CODE);
+            object.put("msg", HTTPMessageConstants.PARAMATER_LACK_MESSAGE);
+        }else
+        {
+            object = this.userInfoService.searchUserInfoByUid(userId);
+        }
+        return object;
+    }
+
+
     @RequestMapping("updatePassWord")
     @ResponseBody
     public JSONObject updatePassWord(String smsCode,String oldPassWord,String newPassWord)
@@ -108,7 +126,6 @@ public class UserController{
         HttpServletRequest req =
                 ((ServletRequestAttributes)RequestContextHolder.getRequestAttributes()).
                         getRequest();
-        Map map = req.getParameterMap();
         String userId = (String)req.getAttribute("userId");
         JSONObject object;
         if(smsCode==null||oldPassWord==null||newPassWord==null)

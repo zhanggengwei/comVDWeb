@@ -21,10 +21,9 @@
         select * from class c, teacher t where c.teacher_id=t.t_id and c.c_id=1
     -->
     <select id="getClass" parameterType="int" resultMap="ClassResultMap">
-        select * from class c, teacher t,student tt
+        select * from class c, teacher t
         where c.teacher_id=t.t_id
-        and c.c_id=#{id} and
-        tt.class_id = #{id}
+        and c.c_id=#{id}
     </select>
     <!-- 使用resultMap映射实体类和字段之间的一一对应关系 -->
     <resultMap type="com.User.model.Classes" id="ClassResultMap">
@@ -34,11 +33,6 @@
             <id property="id" column="t_id"/>
             <result property="name" column="t_name"/>
         </association>
-        <collection property="students" ofType="com.User.model.Student">
-            <result property="name" column="s_name"/>
-            <result property="id" column="s_id"></result>
-            <result property="class_id" column="class_id"></result>
-        </collection>
     </resultMap>
 
     <!--

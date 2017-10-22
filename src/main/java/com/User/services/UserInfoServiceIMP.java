@@ -8,6 +8,7 @@ import com.User.model.*;
 import com.Utils.TokenUtils;
 import com.alibaba.fastjson.JSONObject;
 import com.google.common.util.concurrent.ExecutionError;
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +24,10 @@ public class UserInfoServiceIMP implements UserInfoService {
     UserAuthMapper authMapper;
     @Autowired
     SMSCodeMapper smsCodeMapper;
-
     @Autowired
     classMapper mapper;
-
+    @Autowired
+    UserImageMapper imageMapper;
 
     @Transactional
     public JSONObject loginUserInfo(String phone, String passWord) {
@@ -35,9 +36,6 @@ public class UserInfoServiceIMP implements UserInfoService {
         passWord = MD5Utils.md5String(passWord);
         UserInfo info = null;
         try {
-//            List<OrderUserCustom> list = orderMapper.findOrderUserList();
-             Classes list = mapper.getClass(1);
-
             info = this.userMapper.loginUserInfo(phone,passWord);
             if(info==null)
             {
@@ -45,6 +43,7 @@ public class UserInfoServiceIMP implements UserInfoService {
                  object.put("msg", HTTPMessageConstants.PHONE_PASSWORD_ERROR_MESSAGE);
                  return object;
             }
+            info.setList(this.imageMapper.getAllCollectBeans(info.getUserId()));
         }catch (Exception e)
         {
             throw new RuntimeException(e);
@@ -69,6 +68,7 @@ public class UserInfoServiceIMP implements UserInfoService {
             else {
                 userMapper.registerUserInfo(info);
                 UserAuth auth = UserAuth.createAuthByUserId(info.getUserId(),null,info.getPhone());
+                auth.setPhone(info.getPhone());
                 authMapper.insert_Auth(auth);
                 object.put("code", HTTPCodeConstants.SUCESS_CODE);
                 object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
@@ -87,7 +87,6 @@ public class UserInfoServiceIMP implements UserInfoService {
         JSONObject object = new JSONObject();
         try {
             UserInfo userInfo = this.userMapper.searchUserInfoByUid(uid);
-
             if(userInfo==null)
             {
                  object.put("code", HTTPCodeConstants.UID_ERROR_CODE);
@@ -158,8 +157,8 @@ public class UserInfoServiceIMP implements UserInfoService {
         }
         try {
             UserAuth auth = UserAuth.createAuthByUserId(info.getUserId(),null,info.getPhone());
-            userMapper.resetPassWord(info,smsCode);
-            authMapper.update_AuthToken(auth);
+            info.setToken(auth.getToken());
+            int flag= userMapper.resetPassWord(info,smsCode);
             UserInfo currentInfo = userMapper.customUserInfo(info.getPhone());
             if(currentInfo==null)
             {
