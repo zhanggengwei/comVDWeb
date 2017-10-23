@@ -64,7 +64,7 @@
 			<mvc:exclude-mapping path="/user/sendSms"/>
 			<mvc:exclude-mapping path="/user/register"/>
 			<mvc:exclude-mapping path="/user/resetPassWord"/>
-
+			<mvc:exclude-mapping path="/websocket"/>
 
 			<bean class="com.interceptor.CommonInterceptor"></bean>
 		</mvc:interceptor>

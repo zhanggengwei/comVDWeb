@@ -23,7 +23,7 @@ Welcome<br/>
 
     //判断当前浏览器是否支持WebSocket
     if('WebSocket' in window){
-        websocket = new WebSocket("ws://10.1.1.163:8080/webApp/websocket?token=4555");
+        websocket = new WebSocket("ws://192.168.3.173:8080/webApp/websocket?token=123432434");
     }
     else{
         alert('Not support websocket')

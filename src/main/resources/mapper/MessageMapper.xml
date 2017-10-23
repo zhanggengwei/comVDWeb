@@ -10,15 +10,16 @@
         select * from MESSAGE_TABLE where phone = #{phone} and passWord = #{passWord}
     </select>
 
-    <select id = "recalledMessage">
-        SELECT  * from MESSAGE_TABLE where userId = #{userId}
-    </select>
+    <update id = "recalledMessage">
+        UPDATE  MESSAGE_TABLE SET where senderID = #{userId}
+    </update>
 
-    <select id = "updateMessageStatus">
+    <update id = "updateMessageStatus">
         SELECT * FROM  MESSAGE_TABLE where phone = #{phone}
-    </select>
+    </update>
 
-    <select id="allListMessages" parameterType="java.lang.String">
-
+    <select id="allListMessages" resultType="com.User.model.Message">
+       SELECT  * FROM MESSAGE_TABLE WHERE
+       senderID = #{userId} or receiveId = #{userId}
     </select>
 </mapper>

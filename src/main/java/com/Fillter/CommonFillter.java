@@ -18,13 +18,15 @@ import java.util.Map;
 public class CommonFillter extends CompositeFilter {
 
     @Autowired
-
     private UserInfoAuthService authService;
 
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 
         HttpServletRequest rq = (HttpServletRequest)request;
-        String token = rq.getHeader("token");
+        String token = token = request.getParameter("token");
+        if(token==null) {
+            token = rq.getHeader("token");
+        }
         if(token!=null)
         {
             UserAuth auth = authService.searchAuthByToken(token);
