@@ -7,6 +7,7 @@ import com.User.model.Message;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -24,15 +25,15 @@ public class MessageManagerServiceIMP implements MessageManagerService
 
         return null;
     }
-
+    @Transactional
     @Override
-    public JSONObject insertMessages(Message message) {
+    public JSONObject insertMessages(List<Message> messages) {
         JSONObject object = new JSONObject();
         try {
-            Integer messageID = messageMapper.insertMessage(message);
+            messageMapper.insertMessages(messages);
             object.put("code", HTTPCodeConstants.SUCESS_CODE);
             object.put("msg", HTTPMessageConstants.SUCESS_MESSAGE);
-            object.put("result",message);
+            object.put("result",messages);
         }catch (Exception e)
         {
             throw  new RuntimeException(e);

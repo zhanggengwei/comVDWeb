@@ -3,8 +3,14 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.User.Dao.MessageMapper">
-    <insert id="insertMessage" useGeneratedKeys = "true" keyProperty ="message_ID">
-        insert into MESSAGE_TABLE (name,passWord,phone,region) VALUES (#{name},#{passWord},#{phone},#{region})
+    <insert id="insertMessages" useGeneratedKeys = "true" keyProperty ="message_ID" parameterType="java.util.List">
+        insert into MESSAGE_TABLE (messageContent,source_Url,
+        senderID,receiveId,contactID,messageType,senderIDUserInfo) VALUES
+        <foreach collection="list" item="item" index="index" separator="," close=";">
+            (
+            #{item.messageContent},#{item.source_Url},#{item.senderID},#{item.receiveId},#{item.contactID},#{item.messageType},
+            #{item.senderIDUserInfo})
+        </foreach>
     </insert>
     <select id = "deleteMessage">
         select * from MESSAGE_TABLE where phone = #{phone} and passWord = #{passWord}

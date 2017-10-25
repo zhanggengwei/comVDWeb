@@ -17,7 +17,17 @@ public class Message
     private MessageType messageType;//消息的类型
     private String  tipMessage;//提示消息
     private String  senderIDUserInfo;//发送者的基本消息
+    private Integer conversationType;//会话类型
 
+
+
+    public Integer getConversationType() {
+        return conversationType;
+    }
+
+    public void setConversationType(Integer conversationType) {
+        this.conversationType = conversationType;
+    }
 
     public Integer getMessage_ID() {
         return message_ID;

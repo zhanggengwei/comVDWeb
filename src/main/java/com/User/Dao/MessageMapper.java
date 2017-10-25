@@ -9,7 +9,7 @@ import java.util.List;
 public interface MessageMapper
 {
 
-      public int insertMessage(Message message);
+      public int insertMessages(List<Message> list);
 
       public int deleteMessage(Integer messageId);
 
